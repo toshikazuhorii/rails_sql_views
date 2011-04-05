@@ -63,6 +63,10 @@ begin
       "{bin,lib}/**/*"
     ]
     s.add_dependency 'activerecord'
+    s.add_development_dependency 'flexmock'
+    s.add_development_dependency 'pg'
+    s.add_development_dependency 'mysql'
+    s.add_development_dependency 'mysql2'
   end
 rescue LoadError
   puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
