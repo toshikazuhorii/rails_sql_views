@@ -33,10 +33,14 @@ require 'rails_sql_views/connection_adapters/abstract_adapter'
 require 'rails_sql_views/schema_dumper'
 require 'rails_sql_views/loader'
 
+$rails_sql_views_included = false
+
 ActiveRecord::ConnectionAdapters::AbstractAdapter.class_eval do
   include RailsSqlViews::ConnectionAdapters::SchemaStatements
   def self.inherited(sub)
-    RailsSqlViews::Loader.load_extensions
+    unless $rails_sql_views_included && (Rails.env.test? || Rails.env.cucumber?)
+      RailsSqlViews::Loader.load_extensions 
+    end
   end
 end
 
