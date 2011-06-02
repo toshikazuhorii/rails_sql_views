@@ -1,13 +1,9 @@
 module RailsSqlViews
   module ConnectionAdapters
     module Mysql2Adapter
-      REQUIRED_METHODS = [:supports_views?]
-
       def self.included(base)
-        base.class_eval do
-          def self.method_added(method)
-            public(method) if REQUIRED_METHODS.include?(method) && !self.public_method_defined?(method)
-          end
+        if base.private_method_defined?(:supports_views?) || base.protected_method_defined?(:supports_views?)
+          base.send(:public, :supports_views?)
         end
       end
 
