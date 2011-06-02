@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/test_helper"
+require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
 class ViewOperationsTest < Test::Unit::TestCase
   def test_create_view

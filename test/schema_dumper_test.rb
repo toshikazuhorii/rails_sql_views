@@ -1,4 +1,4 @@
-require "#{File.dirname(__FILE__)}/test_helper"
+require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 require 'active_record/schema_dumper'
 
 class SchemaDumperTest < Test::Unit::TestCase
@@ -24,6 +24,19 @@ class SchemaDumperTest < Test::Unit::TestCase
   end
   def test_view
     create_people_view
+    
+    select_stmt = <<-HERE
+      select first_name, last_name, ssn from people
+      UNION
+      select first_name, last_name, ssn from people2
+    HERE
+    
+    ActiveRecord::Base.connection.create_view(:v_profile, select_stmt, :force => true) do |v|
+      v.column :first_name
+      v.column :last_name
+      v.column :ssn
+    end
+
     stream = StringIO.new
     dumper = ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, stream)
     stream.rewind
