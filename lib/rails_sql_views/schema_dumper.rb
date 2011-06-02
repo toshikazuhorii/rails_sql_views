@@ -26,6 +26,7 @@ module RailsSqlViews
     def dump_with_views(stream)
       dump_without_views(stream)
       begin
+        @connection.class.send(:public, :supports_views?) # this is a kluge, but I don't know why it's changing back to private before it gets here
         if @connection.supports_views?
           views(stream)
         end
