@@ -1,3 +1,5 @@
 pkg/*
 *~
 test/connection.yml
+tmp/*
+.DS_Store
