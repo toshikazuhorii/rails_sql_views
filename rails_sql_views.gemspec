@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Anthony Eden"]
-  s.date = %q{2011-06-02}
+  s.date = %q{2011-06-03}
   s.description = %q{Adds support for using SQL views within ActiveRecord}
   s.email = %q{josh@technicalpickles.com}
   s.extra_rdoc_files = [
@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rake>, ["= 0.8.7"])
-      s.add_runtime_dependency(%q<rails>, ["= 3.0.7"])
+      s.add_runtime_dependency(%q<rails>, ["~> 3.0.7"])
       s.add_runtime_dependency(%q<mysql2>, ["= 0.2.7"])
       s.add_development_dependency(%q<jeweler>, ["= 1.6.2"])
       s.add_development_dependency(%q<flexmock>, ["= 0.9.0"])
@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mysql2>, [">= 0"])
     else
       s.add_dependency(%q<rake>, ["= 0.8.7"])
-      s.add_dependency(%q<rails>, ["= 3.0.7"])
+      s.add_dependency(%q<rails>, ["~> 3.0.7"])
       s.add_dependency(%q<mysql2>, ["= 0.2.7"])
       s.add_dependency(%q<jeweler>, ["= 1.6.2"])
       s.add_dependency(%q<flexmock>, ["= 0.9.0"])
@@ -77,7 +77,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rake>, ["= 0.8.7"])
-    s.add_dependency(%q<rails>, ["= 3.0.7"])
+    s.add_dependency(%q<rails>, ["~> 3.0.7"])
     s.add_dependency(%q<mysql2>, ["= 0.2.7"])
     s.add_dependency(%q<jeweler>, ["= 1.6.2"])
     s.add_dependency(%q<flexmock>, ["= 0.9.0"])
