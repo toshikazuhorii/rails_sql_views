@@ -3,42 +3,12 @@ module RailsSqlViews
     module PostgreSQLAdapter
       def self.included(base)
         alias_method_chain :tables, :views_included unless method_defined?(:tables_with_views_included)
-        alias_method_chain :table_exists?, :views_included # unless method_defined?(:table_exists_with_views_included?)
       end
       # Returns true as this adapter supports views.
       def supports_views?
         true
       end
       
-      def table_exists_with_views_included?(name)
-   puts "\nmy postgres table_exists?", "name #{name}"
-        name          = name.to_s
-        schema, table = name.split('.', 2)
-   puts "schema #{schema}", "table #{table}"
-        unless table # A table was provided without a schema
-          table  = schema
-          schema = nil
-        end
-
-        if name =~ /^"/ # Handle quoted table names
-          table  = name
-          schema = nil
-        end
-
-        query(<<-SQL).first[0].to_i > 0
-            SELECT COUNT(*)
-            FROM (
-               select schemaname, tablename as itemname
-               from pg_tables
-               union
-               select schemaname, viewname
-               from pg_views
-            ) combo
-            WHERE itemname = '#{table.gsub(/(^"|"$)/,'')}'
-            #{schema ? "AND schemaname = '#{schema}'" : ''}
-        SQL
-      end
-
       def tables_with_views_included(name = nil)
    puts "\nmy postgres tables"
         q = <<-SQL
