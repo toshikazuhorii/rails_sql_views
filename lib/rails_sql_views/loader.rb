@@ -9,7 +9,8 @@ module RailsSqlViews
           require "rails_sql_views/connection_adapters/#{db.downcase}_adapter"
       puts "\nload_extensions"
       klass = ActiveRecord::ConnectionAdapters.const_get("#{db}Adapter")
-      puts klass.class.to_s, klass.to_s, klass.method_defined?(:tables), klass.method_defined?(:tables_with_views_included)
+      puts klass.class.to_s, klass.to_s
+      puts klass.class.method_defined?(:tables), klass.class.method_defined?(:tables_with_views_included)
           ActiveRecord::ConnectionAdapters.const_get("#{db}Adapter").class_eval do
             include RailsSqlViews::ConnectionAdapters::AbstractAdapter
             include RailsSqlViews::ConnectionAdapters.const_get("#{db}Adapter")
