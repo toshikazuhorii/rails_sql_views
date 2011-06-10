@@ -2,60 +2,14 @@ module RailsSqlViews
   module ConnectionAdapters
     module PostgreSQLAdapter
       def self.included(base)
-   puts "\nmy postgres self.included", self.to_s, base.to_s
-   puts method_defined?(:tables), method_defined?(:tables_with_views_included)
-   puts base.method_defined?(:tables), base.method_defined?(:tables_with_views_included)
-   puts instance_methods.inspect, base.instance_methods.inspect
-
-        unless method_defined?(:tables_with_views_included)
-          base.alias_method_chain :tables, :views_included
-        else
-          alias_method :tables, :tables_with_views_included # still doesn't run the right one, grump
-        end
-        base.alias_method_chain :table_exists?, :views_included
-        
-   puts method_defined?(:tables_without_views_included)
-   puts base.method_defined?(:tables_without_views_included)
-   puts method_defined?(:table_exists_without_views_included?)
-   puts base.method_defined?(:table_exists_without_views_included?)
+        base.alias_method_chain :tables, :views_included unless method_defined?(:tables_with_views_included)
       end
-      
-      
       # Returns true as this adapter supports views.
       def supports_views?
         true
       end
       
-      def table_exists_with_views_included?(name)
-   puts "\nmy postgres table_exists?", "name #{name}"
-        name          = name.to_s
-        schema, table = name.split('.', 2)
-        unless table # A table was provided without a schema
-          table  = schema
-          schema = nil
-        end
-        if name =~ /^"/ # Handle quoted table names
-          table  = name
-          schema = nil
-        end
-    puts "schema #{schema}", "table #{table}"
-
-        query(<<-SQL).first[0].to_i > 0
-            SELECT COUNT(*)
-            FROM (
-               select schemaname, tablename as itemname
-               from pg_tables
-               union
-               select schemaname, viewname
-               from pg_views
-            ) combo
-            WHERE itemname = '#{table.gsub(/(^"|"$)/,'')}'
-            #{schema ? "AND schemaname = '#{schema}'" : ''}
-        SQL
-      end
-      
       def tables_with_views_included(name = nil)
-   puts "\nmy postgres tables"
         q = <<-SQL
         SELECT table_name, table_type
           FROM information_schema.tables
