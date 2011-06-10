@@ -6,7 +6,13 @@ module RailsSqlViews
    puts method_defined?(:tables), method_defined?(:tables_with_views_included)
    puts base.method_defined?(:tables), base.method_defined?(:tables_with_views_included)
    puts instance_methods.inspect, base.instance_methods.inspect
-        base.alias_method_chain :tables, :views_included
+
+        unless method_defined?(:tables_with_views_included)
+          base.alias_method_chain :tables, :views_included
+        else
+          alias_method :tables, :tables_with_views_included
+        end
+   
    puts method_defined?(:tables_without_views_included)
    puts base.method_defined?(:tables_without_views_included)
       end
