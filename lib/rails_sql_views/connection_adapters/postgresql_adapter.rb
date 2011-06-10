@@ -5,7 +5,7 @@ module RailsSqlViews
    puts "\nmy postgres self.included", self.to_s, base.to_s
    puts method_defined?(:tables), method_defined?(:tables_with_views_included)
    puts base.method_defined?(:tables), base.method_defined?(:tables_with_views_included)
-   puts instance_methods.inspect
+   puts instance_methods.inspect, base.instance_methods.inspect
         base.alias_method_chain :tables, :views_included
    puts method_defined?(:tables_without_views_included)
    puts base.method_defined?(:tables_without_views_included)
