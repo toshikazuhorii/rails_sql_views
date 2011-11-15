@@ -52,11 +52,11 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rake>, ["= 0.9.2"])
-      s.add_runtime_dependency(%q<rails>, ["~> 3.1.rc1"])
+      s.add_runtime_dependency(%q<rails>, ["~> 3.1.1"])
       s.add_development_dependency(%q<jeweler>, ["= 1.6.2"])
       s.add_development_dependency(%q<flexmock>, ["= 0.9.0"])
       s.add_development_dependency(%q<test-unit>, ["= 2.3.0"])
-      s.add_development_dependency(%q<mysql2>, ["= 0.2.7"])
+      s.add_development_dependency(%q<mysql2>, ["~> 0.3.10"])
       s.add_development_dependency(%q<pg>, ["= 0.11.0"])
       s.add_runtime_dependency(%q<activerecord>, [">= 0"])
       s.add_development_dependency(%q<flexmock>, [">= 0"])
@@ -65,11 +65,11 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mysql2>, [">= 0"])
     else
       s.add_dependency(%q<rake>, ["= 0.9.2"])
-      s.add_dependency(%q<rails>, ["~> 3.1.rc1"])
+      s.add_dependency(%q<rails>, ["~> 3.1.1"])
       s.add_dependency(%q<jeweler>, ["= 1.6.2"])
       s.add_dependency(%q<flexmock>, ["= 0.9.0"])
       s.add_dependency(%q<test-unit>, ["= 2.3.0"])
-      s.add_dependency(%q<mysql2>, ["= 0.2.7"])
+      s.add_dependency(%q<mysql2>, ["~> 0.3.10"])
       s.add_dependency(%q<pg>, ["= 0.11.0"])
       s.add_dependency(%q<activerecord>, [">= 0"])
       s.add_dependency(%q<flexmock>, [">= 0"])
@@ -79,11 +79,11 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rake>, ["= 0.8.7"])
-    s.add_dependency(%q<rails>, ["~> 3.1.rc1"])
+    s.add_dependency(%q<rails>, ["~> 3.1.1"])
     s.add_dependency(%q<jeweler>, ["= 1.6.2"])
     s.add_dependency(%q<flexmock>, ["= 0.9.0"])
     s.add_dependency(%q<test-unit>, ["= 2.3.0"])
-    s.add_dependency(%q<mysql2>, ["= 0.2.7"])
+    s.add_dependency(%q<mysql2>, ["~> 0.3.10"])
     s.add_dependency(%q<pg>, ["= 0.11.0"])
     s.add_dependency(%q<activerecord>, [">= 0"])
     s.add_dependency(%q<flexmock>, [">= 0"])

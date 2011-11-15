@@ -24,13 +24,13 @@ class SchemaDumperTest < Test::Unit::TestCase
   end
   def test_view
     create_people_view
-    
+
     select_stmt = <<-HERE
       select first_name, last_name, ssn from people
       UNION
       select first_name, last_name, ssn from people2
     HERE
-    
+
     ActiveRecord::Base.connection.create_view(:v_profile, select_stmt, :force => true) do |v|
       v.column :first_name
       v.column :last_name

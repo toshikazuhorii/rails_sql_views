@@ -43,11 +43,11 @@ module ActiveRecord # :nodoc:
               end
           case r.macro
           when :belongs_to
-            if self.column_names.include?(r.primary_key_name.to_s)
+            if self.column_names.include?(r.foreign_key.to_s)
               if !r.options[:foreign_type] || self.column_names.include?(r.options[:foreign_type])
                 options = r.options.merge(
                   :class_name => r.class_name,
-                  :foreign_key => r.primary_key_name
+                  :foreign_key => r.foreign_key
                 )
                 belongs_to r.name, options
               end
@@ -56,13 +56,13 @@ module ActiveRecord # :nodoc:
             ### TODO :through assocications
             options = r.options.merge(
               :class_name => r.class_name,
-              :foreign_key => r.primary_key_name
+              :foreign_key => r.foreign_key
             )
             has_many r.name, options
           when :has_and_belongs_to_many
             options = r.options.merge(
               :class_name => r.class_name,
-              :foreign_key => r.primary_key_name,
+              :foreign_key => r.foreign_key,
               :association_foreign_key => r.association_foreign_key
             )
             has_and_belongs_to_many r.name, options
