@@ -47,31 +47,6 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "rails_sql_views"
-    s.summary = "Library which adds SQL Views to ActiveRecord."
-    s.email = "josh@technicalpickles.com"
-    s.homepage = "http://activewarehouse.rubyforge.org/rails_sql_views"
-    s.description = "Adds support for using SQL views within ActiveRecord"
-    s.authors = ["Anthony Eden"]
-    s.files =  FileList[
-      "CHANGELOG", 
-      "README",
-      "Rakefile",
-      "{bin,lib}/**/*"
-    ]
-    s.add_dependency 'activerecord'
-    s.add_development_dependency 'flexmock'
-    s.add_development_dependency 'pg'
-    s.add_development_dependency 'mysql'
-    s.add_development_dependency 'mysql2'
-  end
-rescue LoadError
-  puts "Jeweler, or one of its dependencies, is not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
-
 desc "Publish the API documentation"
 task :pdoc => [:rdoc] do 
   Rake::SshDirPublisher.new("aeden@rubyforge.org", "/var/www/gforge-projects/activewarehouse/rails_sql_views/rdoc", "rdoc").upload
