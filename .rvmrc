@@ -1,1 +1,1 @@
-rvm ruby-1.9.2-p180@rails_sql_views --create
+rvm ruby-1.9.3-head@rails_sql_views --create
