@@ -49,8 +49,5 @@ Gem::Specification.new do |s|
   s.add_dependency('rails', "~> 2.3.14")
   s.add_dependency('test-unit', ">= 2.3.0")
   s.add_dependency('flexmock', ">= 0")
-  s.add_dependency('pg')
-  s.add_dependency('mysql')
-  s.add_dependency('mysql2')
 end
 
