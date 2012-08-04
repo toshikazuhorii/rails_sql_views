@@ -1,3 +1,3 @@
 class Person2 < ActiveRecord::Base
-  set_table_name :people2
+  self.table_name = 'people2'
 end

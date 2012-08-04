@@ -6,7 +6,7 @@ class SchemaDumperTest < Test::Unit::TestCase
     teardown
   end
   def teardown
-    ['V_PEOPLE', 'V_PROFILE'].each do |view|
+    ['V_PEOPLE'].each do |view|
       if ActiveRecord::Base.connection.adapter_name == 'OracleEnhanced'
         ActiveRecord::Base.connection.execute("
           DECLARE
@@ -31,12 +31,6 @@ class SchemaDumperTest < Test::Unit::TestCase
       select first_name, last_name, ssn from people2
     HERE
 
-    ActiveRecord::Base.connection.create_view(:v_profile, select_stmt, :force => true) do |v|
-      v.column :first_name
-      v.column :last_name
-      v.column :ssn
-    end
-
     stream = StringIO.new
     dumper = ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, stream)
     stream.rewind
@@ -55,12 +49,6 @@ class SchemaDumperTest < Test::Unit::TestCase
       UNION
       select first_name, last_name, ssn from people2
     HERE
-    
-    ActiveRecord::Base.connection.create_view(:v_profile, select_stmt, :force => true) do |v|
-      v.column :first_name
-      v.column :last_name
-      v.column :ssn
-    end
     
     assert_dump_and_load_succeed
   end

@@ -48,11 +48,4 @@ ActiveRecord::Schema.define(:version => 0) do
     v.column :social_security
     v.column :address_id
   end
-
-  create_view "v_profile", "select `people`.`first_name` AS `first_name`,`people`.`last_name` AS `last_name`,`people`.`ssn` AS `ssn` from `people` union select `people2`.`first_name` AS `first_name`,`people2`.`last_name` AS `last_name`,`people2`.`ssn` AS `ssn` from `people2`", :force => true do |v|
-    v.column :first_name
-    v.column :last_name
-    v.column :ssn
-  end
-
 end

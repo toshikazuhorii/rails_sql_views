@@ -10,7 +10,7 @@ class AdapterTest < Test::Unit::TestCase
     create_view
     found = ActiveRecord::Base.connection.tables.sort
     found.delete(ActiveRecord::Migrator.schema_migrations_table_name)
-    assert_equal ["items", "items_people", "people", "people2", "places", "v_people"], found
+    assert_equal ["items", "items_people", "people", "people2", "places"], found
   end
   def test_base_tables
     create_view
