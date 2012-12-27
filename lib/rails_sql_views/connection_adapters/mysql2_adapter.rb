@@ -2,6 +2,12 @@ module RailsSqlViews
   module ConnectionAdapters
     module Mysql2Adapter
       def self.included(base)
+
+        base.class_eval do
+          alias_method :original_tables_method, :tables
+          alias_method :tables, :base_tables
+        end
+
         if base.private_method_defined?(:supports_views?) || base.protected_method_defined?(:supports_views?)
           base.send(:public, :supports_views?)
         end
@@ -11,22 +17,18 @@ module RailsSqlViews
       def supports_views?
         true
       end
-      
-      def base_tables(name = nil) #:nodoc:
-        tables = []
-        execute("SHOW FULL TABLES WHERE TABLE_TYPE='BASE TABLE'").each{|row| tables << row[0]}
-        tables
+
+      def base_tables(name = nil, database = nil, like = nil) #:nodoc:
+        tables_of_type(name, database, like, "BASE TABLE")
       end
       alias nonview_tables base_tables
       
-      def views(name = nil) #:nodoc:
-        views = []
-        execute("SHOW FULL TABLES WHERE TABLE_TYPE='VIEW'").each{|row| views << row[0]}
-        views
+      def views(name = nil, database = nil, like = nil) #:nodoc:
+        tables_of_type(name, database, like, "VIEW")
       end
 
-      def tables_with_views_included(name = nil)
-        nonview_tables(name) + views(name)
+      def tables_with_views_included(name = nil, database = nil, like = nil)
+        nonview_tables(name, database, like) + views(name, database, like)
       end
       
       def structure_dump
@@ -56,6 +58,15 @@ module RailsSqlViews
       private
       def convert_statement(s)
         s.gsub!(/.* AS (select .*)/, '\1')
+      end
+
+      def tables_of_type(name, database, like, table_type)
+        sql = "SHOW FULL TABLES "
+        sql << "IN #{quote_table_name(database)} " if database
+        sql << "LIKE #{quote(like)} " if like
+        execute_and_free(sql, 'SCHEMA') do |result|
+          result.select { |f| f.last == table_type }.map(&:first)
+        end
       end
     end
   end

@@ -34,7 +34,8 @@ class SchemaDumperTest < Test::Unit::TestCase
     stream = StringIO.new
     dumper = ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, stream)
     stream.rewind
-    assert_equal File.open(File.dirname(__FILE__) + "/schema.#{$connection}.expected.rb", 'r').readlines, stream.readlines
+    schema_out = stream.readlines
+    assert_equal File.open(File.dirname(__FILE__) + "/schema.#{$connection}.expected.rb", 'r').readlines, schema_out 
   end
   def test_dump_and_load
     create_people_view
